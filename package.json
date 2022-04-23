@@ -1,0 +1,25 @@
+{
+  "name": "personnel-database",
+  "version": "1.0.0",
+  "description": "A management tool for keeping track of an employee database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rowe2ry/Personnel-database.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rowe2ry/Personnel-database/issues"
+  },
+  "homepage": "https://github.com/Rowe2ry/Personnel-database#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.2",
+    "mysql2": "^2.3.3"
+  }
+}
