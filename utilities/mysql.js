@@ -2,10 +2,16 @@
  * Imports
  * ========================================================================= */
 
-const inquirer = require('inquirer');
-const mysql = require('mysql2');
-const questions = require('./utilities/menus');
+const db = require('./startmysql');
 
 /* =========================================================================
  * Function Calls
  * ========================================================================= */
+
+class SQL {
+    constructor(mysql) {
+        connection = this.mysql;
+    };
+
+    // TODO: 
+}
