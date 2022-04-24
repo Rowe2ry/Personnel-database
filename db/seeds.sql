@@ -1,11 +1,11 @@
 USE human_resources
 
-INSERT INTO department (id, dept_name)
+INSERT INTO department (dept_name)
 VALUES
-    (1, 'Administrative/Office'),
-    (2, 'IT Services'),
-    (3, 'Production Floor'),
-    (4, 'Warehouse');
+    ('Administrative/Office'),
+    ('IT Services'),
+    ('Production Floor'),
+    ('Warehouse');
 
 INSERT INTO role (title, salary, department_id)
 VALUES
@@ -21,27 +21,27 @@ VALUES
     ('Forklift Operator', 48000, 4),
     ('Shipping/Receiving', 38000, 4);
 
-INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
-    (1, 'John', 'Smith', 1, NULL),
-    (2, 'Samantha', 'Johnson', 1, NULL),
-    (15, 'Tameka', 'Jackson', 3, 1),
-    (21, 'Kelly', 'Shuster', 7, NULL),
-    (26, 'Maurice', 'Hamilton', 3, 1),
-    (27, 'Sebastian', 'Gobtree', 4, 2),
-    (28, 'Robert', 'Ballard', 8, 21),
-    (30, 'Juliet', 'McPherson', 2, 2),
-    (31, 'Abdul', 'Amaharazi', 6, 84),
-    (34, 'Megan', 'Zanadtu', 3, 2),
-    (35, 'Frank', 'Hemsworth', 8, 21),
-    (41, 'Amanda', 'Moss', 6, 84),
-    (46, 'David', 'Bartowski', 2, 1),
-    (55, 'James', 'Kim', 3, 2),
-    (71, 'Jerry', 'Ericson', 3, 2),
-    (74, 'Bart', 'Flemming', 11, 21)
-    (84, 'Duncan', 'Buchanon', 5, NULL),
-    (94, 'Stephen', 'Tuttfort', 8, 21),
-    (134, 'Luke', 'Holland', 9, 21),
-    (141, 'Vanessa', 'Ross', 10 , 21),
-    (184, 'Hanz', 'Leispitch', 10, 21);
+    ('John', 'Smith', 1, 1),
+    ('Samantha', 'Johnson', 1, 2),
+    ('Duncan', 'Buchanon', 5, 3),
+    ('Kelly', 'Shuster', 7, 4),
+    ('Tameka', 'Jackson', 3, 1),
+    ('Maurice', 'Hamilton', 3, 1),
+    ('Sebastian', 'Gobtree', 4, 2),
+    ('Robert', 'Ballard', 8, 4),
+    ('Juliet', 'McPherson', 2, 2),
+    ('Abdul', 'Amaharazi', 6, 3),
+    ('Megan', 'Zanadtu', 3, 2),
+    ('Frank', 'Hemsworth', 8, 4),
+    ('Amanda', 'Moss', 6, 3),
+    ('David', 'Bartowski', 2, 1),
+    ('James', 'Kim', 3, 2),
+    ('Jerry', 'Ericson', 3, 2),
+    ('Bart', 'Flemming', 11, 4),
+    ('Stephen', 'Tuttfort', 8, 4),
+    ('Luke', 'Holland', 9, 4),
+    ('Vanessa', 'Ross', 10 , 4),
+    ('Hanz', 'Leispitch', 10, 4);
 
