@@ -99,6 +99,10 @@ class SQL {
         const employeeIdNum = this.mysql.promise().query(`SELECT id FROM employee WHERE first_name = '${first}' AND last_name = '${last}';`);
         return employeeIdNum[0][0];
     };
+
+    returnManagerList() {
+        return this.mysql.promise().query('SELECT CONCAT(employee.first_name, \' \', employee.last_name) AS name FROM employee WHERE id = manager_id;');
+    };
 };
 
 module.exports = new SQL(db);
