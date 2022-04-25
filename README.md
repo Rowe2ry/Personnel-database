@@ -53,13 +53,17 @@
 
   
 
-  > npm i \n > node index.js   
+  > npm i  
+
+  > node index.js   
 
   
 
   ## Usage  
 
-  
+  [Video Walkthrough Here](https://drive.google.com/file/d/12a6x_oY7hKVNWWKZXr9slFmKS_W2r4SK/view)
+
+  ![Application Screenshot](./README_assets/personnel_database_screenshot.png)
 
   Use the arrow keys to navigate the menus and enter in answers with the "eneter" or "return" key. Wehn prompted for an answer without a list of options, simply type the answer and hit "return" or "eneter".  
 
