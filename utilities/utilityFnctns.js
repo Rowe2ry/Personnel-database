@@ -47,7 +47,7 @@ const goToMainMenu = () => {
                 addEmpMenu();
                 break;
             case 'update an employee role':
-                updateEmpMenu(); // TODO: write function below to change the employee role (db.changeRole(empId, roleId))
+                updateEmpMenu(); // go to sub-menu (actually series of question prompts) to change the employee role
                 break;
             case 'exit application': // close app
                 console.log('I hope you enjoyed using this application. Have a great day.'); // being polite and fun
@@ -157,11 +157,42 @@ const addEmpMenu = () => {
     });
 };
 
-// TODO: Function for Updating a role
-
+// Function for Updating a role
 const updateEmpMenu = () => {
-    managerList = returnManagerList();
-    goToMainMenu();
+    db.viewAllEmployees()
+    .then(result => {
+        const empList = result[0].map(name => name.first.concat(' ', name.last));
+        db.viewAllRoles() // retrieve the array of role objects from the database
+        .then(result2 => { // reduce tis array to JUST the role names
+            const roleList = result2[0].map(role => role.job_title);
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'empChoose',
+                    message: 'Which employee are you Modifying?',
+                    choices: empList,
+                },
+                {
+                    type: 'list',
+                    name: 'roleChoose',
+                    message: 'What is the new role you would like to assign to this employee?',
+                    choices: roleList
+                }
+            ])
+            .then(answers => {
+                db.empNameToId(answers.empChoose) // use the name the user picked from our array of employee names to get that role's id number
+                .then(result3 => {
+                    const empId = result3[0][0].id; // the actual id number of the employee we are working with
+                    db.roleNameToId(answers.roleChoose) // use the name the user picked from our array of role names to get that role's id number
+                    .then (result4 => {
+                        const roleId = result4[0][0].id; // grab the role id number
+                        db.changeRole(empId, roleId); // use the employee id to target the employee and update the role id number
+                        goToMainMenu();
+                    });
+                });
+            });
+        });
+    });
 };
 
 module.exports = {

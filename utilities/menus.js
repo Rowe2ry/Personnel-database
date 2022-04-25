@@ -47,25 +47,9 @@ const addEmp = [
     }
 ];
 
-const updateEmp = [
-    {
-        type: 'list',
-        name: 'empChoose',
-        message: 'Which employee are you Modifying?',
-        choices: empList,
-    },
-    {
-        type: 'list',
-        name: 'roleChoose',
-        message: 'What is the new role you would like to assign to this employee?',
-        choices: roleList
-    }
-];
-
 module.exports = {
     mainMenu,
     addDept,
     addRole,
-    addEmp,
-    updateEmp
+    addEmp
 };

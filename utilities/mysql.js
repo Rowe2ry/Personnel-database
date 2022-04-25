@@ -80,15 +80,6 @@ class SQL {
         return this.mysql.promise().query(`SELECT id FROM role WHERE title = '${str}';`);
     };
 
-    // function that gets the current list of employees by name and puts them in an array
-    empList() {
-        this.mysql.promise().query('SELECT employee.first_name, employee.last_name FROM employee;', function(err, results) {
-            const employees = []; // new empty array
-            results.forEach(result => departments.push(result.first_name.concat(` ${result.last_name}`))); // go thru array of objects and just pull out the department name values
-            return employees; // return new array of department names
-        });
-    };
-
     // Get employee id number by first and last name
     empNameToId(str) {
         const fullName = str.split(' ');
