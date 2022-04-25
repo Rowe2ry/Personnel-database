@@ -63,8 +63,7 @@ class SQL {
 
     // Get department id number by name
     deptNameToId(str) {
-        const deptIdNum = this.mysql.promise().query(`SELECT id FROM department WHERE dept_name = '${str}';`);
-        return deptIdNum[0][0];
+        return this.mysql.promise().query(`SELECT id FROM department WHERE dept_name = '${str}';`);
     };
 
     // function that gets the current list of roles by name and puts them in an array

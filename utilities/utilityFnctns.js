@@ -80,16 +80,31 @@ const addDeptMenu = () => {
 // Function for handling the add new role menu
 const addRoleMenu = () => {
    // function for the menu that gets 3 values and passes in the 'db.addRole(res.roleName, res.roleSalary, res.roleToDepot)'
-   const deptList = db.viewAllDepts().map(department => department.dept_name);
-    inquirer.prompt([...prompts.addRole])
-    .then((res) => {
-        const currentRoles = db.viewAllRoles().map(roles => roles.job_title);
-        if (!currentRoles.includes(res.roleName)) {
-            db.addRole(res.roleName, res.roleSalary, db.deptNameToId(res.roleToDept));
-        } else {
-            console.log('That departments already exists. It has NOT been added again.');
-        }
-        goToMainMenu();
+   db.viewAllDepts()
+   .then(result => {
+       const deptList = result[0].map(department => department.dept_name);
+        inquirer.prompt([...prompts.addRole, {
+            type: 'list',
+            name: 'roleToDept',
+            message: 'Which department does this role operate under?',
+            choices: deptList
+        },])
+        .then((answers) => {
+            db.viewAllRoles()
+            .then(result2 => {
+                const currentRoles = result2[0].map(role => role.title);
+                db.deptNameToId(answers.roleToDept)
+                .then(result3 => {
+                    const departmentId = result3[0][0].id;
+                    if (!currentRoles.includes(answers.roleName)) {
+                        db.addRole(answers.roleName, answers.roleSalary, departmentId);
+                    } else {
+                        console.log('That role already exists. It has NOT been added again.');
+                    }
+                    goToMainMenu();
+                });
+            });
+        });    
     });
 };
 
@@ -110,5 +125,5 @@ module.exports = {
     addDeptMenu,
     addRoleMenu,
     addNewEmpMenu,
-    updateEmpMenu  
+    updateEmpMenu
 };

@@ -28,12 +28,6 @@ const addRole = [
         message: 'What name do you want to give the new Role?'
     },
     {
-        type: 'list',
-        name: 'roleToDept',
-        message: 'Which department does this role operate under?',
-        choices: deptList
-    },
-    {
         type: 'input',
         name: 'roleSalary',
         message: 'How much does this role pay?'
