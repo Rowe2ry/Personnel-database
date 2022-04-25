@@ -77,8 +77,7 @@ class SQL {
 
     // Get role id number by name
     roleNameToId(str) {
-        const roleIdNum = this.mysql.promise().query(`SELECT id FROM role WHERE title = '${str}';`);
-        return roleIdNum[0][0];
+        return this.mysql.promise().query(`SELECT id FROM role WHERE title = '${str}';`);
     };
 
     // function that gets the current list of employees by name and puts them in an array
@@ -95,8 +94,7 @@ class SQL {
         const fullName = str.split(' ');
         const first = fullName[0];
         const last = fullName[1];
-        const employeeIdNum = this.mysql.promise().query(`SELECT id FROM employee WHERE first_name = '${first}' AND last_name = '${last}';`);
-        return employeeIdNum[0][0];
+        return this.mysql.promise().query(`SELECT id FROM employee WHERE first_name = '${first}' AND last_name = '${last}';`);
     };
 
     returnManagerList() {

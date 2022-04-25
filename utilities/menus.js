@@ -44,18 +44,6 @@ const addEmp = [
         type: 'input',
         name: 'empLast',
         message: 'What is the employee\'s last name?'
-    },
-    {
-        type: 'list',
-        name: 'empJob',
-        message: 'What is the employee\'s job?',
-        choices: roleList
-    },
-    {
-        type: 'list',
-        name: 'empManage',
-        message: 'Who does this employee report to?',
-        choices: [...managerList, 'nobody: this employee is their own department\'s manager'] 
     }
 ];
 
