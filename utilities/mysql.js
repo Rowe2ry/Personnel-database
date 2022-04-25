@@ -100,6 +100,16 @@ class SQL {
     returnManagerList() {
         return this.mysql.promise().query('SELECT CONCAT(employee.first_name, \' \', employee.last_name) AS name FROM employee WHERE id = manager_id;');
     };
+
+    giveManagerTheirOwnId(str) {
+        const fullName = str.split(' ');
+        const first = fullName[0];
+        const last = fullName[1];
+        return this.mysql.promise().query(`SELECT id FROM employee WHERE first_name = '${first}' AND last_name = '${last}';`)
+        .then(result => {
+            this.mysql.promise().query(`UPDATE employee SET manager_id = "${result[0][0].id}" WHERE id = ${result[0][0].id};`);
+        });
+    };
 };
 
 module.exports = new SQL(db);

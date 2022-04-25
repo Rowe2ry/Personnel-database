@@ -2,7 +2,6 @@ const inquirer = require('inquirer');
 const prompts = require('./menus');
 const db = require('./mysql');
 const tables = require('console.table');
-const { empNameToId } = require('./mysql');
 
 // function to go to the main menu
 // switch case statement for main menu response
@@ -111,40 +110,44 @@ const addRoleMenu = () => {
 
 // TODO: Function for handling the add new employee menu
 const addEmpMenu = () => {
-    db.viewAllRoles()
-   .then(result => {
+    db.viewAllRoles() // retrieve the array of role objects from the database
+   .then(result => { // reduce tis array to JUST the role names
         const roleList = result[0].map(role => role.job_title);
         // console.log(roleList);
-        db.returnManagerList()
-        .then(result2 => {
+        db.returnManagerList() // retrieve the array of employee objects from the database whose employee id and manager id numbers are the same (if they report to themselves, they are a manager)
+        .then(result2 => { // simplify the array to JUST manager name strings (first and last are concatenated around a ' '(space))
             const managerList = result2[0].map(manager => manager.name)
             // console.log(managerList);
             inquirer.prompt([...prompts.addEmp, {
                 type: 'list',
                 name: 'empJob',
                 message: 'What is the employee\'s job?',
-                choices: roleList
+                choices: roleList // use the array of role names we got above
             },
             {
                 type: 'list',
                 name: 'empManage',
                 message: 'Who does this employee report to?',
-                choices: [...managerList, 'nobody: this employee is their own department\'s manager'] 
+                choices: [...managerList, 'nobody: this employee is their own department\'s manager'] // use the array of manager name strings we got above
             }])
             .then((answers) => {
-                db.roleNameToId(answers.empJob)
+                db.roleNameToId(answers.empJob) // use the name the user picked from our array of role names to get that role's id number
                 .then (result3 => {
                     // console.log(result3);
-                    const roleId = result3[0][0].id;
-                    const reportTo = answers.empManage;
+                    const roleId = result3[0][0].id; // grab the role id number
+                    const reportTo = answers.empManage; // use the manager name our user picked from our array of existing manager names, or the oddball option if we are adding a new manager
                     if (reportTo === 'nobody: this employee is their own department\'s manager'){
-                        db.addEmployee(answers.empFirst, answers.empLast, roleId, 'NULL');
-                        goToMainMenu();
+                        const stringName = answers.empFirst.concat(' ', answers.empLast); // turn the first and last name of the new employee we are adding into one contcatenated string for converting to the employee id number
+                        db.addEmployee(answers.empFirst, answers.empLast, roleId, 'NULL') // add our new manager with  a null reporting to value
+                        .then(result5 => {
+                            db.giveManagerTheirOwnId(stringName); // their reporting manager is now listed as themselves so they show up in the master employee list
+                            goToMainMenu();
+                        });
                     } else {
-                        db.empNameToId(reportTo)
+                        db.empNameToId(reportTo) // just get their manager's id number
                         .then(result4 =>{
-                            const manId = result4[0][0].id;
-                            db.addEmployee(answers.empFirst, answers.empLast, roleId, manId);
+                            const manId = result4[0][0].id; // assign to a more amnageable variable name
+                            db.addEmployee(answers.empFirst, answers.empLast, roleId, manId); // add the employee with all 4 valid parameters
                         goToMainMenu();
                         });
                     };
