@@ -34,7 +34,7 @@ class SQL {
 
     // add a department
     addDepartment(departmentName) {
-        return this.mysql.promise().query(`INSERT INTO department (name) VALUES ('${departmentName}');`);
+        return this.mysql.promise().query(`INSERT INTO department (dept_name) VALUES ('${departmentName}');`);
     };
 
     // add a role

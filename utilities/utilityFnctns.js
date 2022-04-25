@@ -14,18 +14,30 @@ const goToMainMenu = () => {
         switch (res.home) {
             case 'view all departments': // log the table object array returned from mysql
                 console.table(db.viewAllDepts()
-                .then(([rows]) => {
-                    return rows;
-                }));
-                goToMainMenu();
+                .then(result => {
+                    console.table(result[0]);
+                    goToMainMenu();
+                  }).catch(err => {
+                    console.log(err);
+                  }));
                 break;
             case 'view all roles': // log the table object array returned from mysql
-                console.log(db.viewAllRoles());
-                goToMainMenu();
-            break;
-            case 'view all employees': // log the formatted table object array returned from mysql
-                console.table(db.viewAllEmployees());
-                goToMainMenu();
+                console.table(db.viewAllRoles()
+                .then(result => {
+                    console.table(result[0]);
+                    goToMainMenu();
+                }).catch(err => {
+                    console.log(err);
+                }));
+                break;
+            case 'view all employees': // log the formated table object array returned from mysql
+                console.table(db.viewAllEmployees()
+                .then(result => {
+                    console.table(result[0]);
+                    goToMainMenu();
+                }).catch(err => {
+                    console.log(err);
+                }));
                 break;
             case 'add a department': // log the formatted table object array returned from mysql
                 addDeptMenu();
@@ -51,15 +63,18 @@ const goToMainMenu = () => {
 // Function for handling the add new department menu
 const addDeptMenu = () => {
     inquirer.prompt([...prompts.addDept])
-    .then((res) => {
-        const currentDepts = db.viewAllDepts().map(department => department.dept_name);
-        if (!currentDepts.includes(res.deptName)) {
-            db.addDepartment(res.deptName);
-        } else {
-            console.log('That departments already exists. It has NOT been added again.');
-        }
-        goToMainMenu();
-    });
+        .then((res) => {
+            db.viewAllDepts().then(result => {
+                const currentDepts = result[0].map(department => department.dept_name);
+                console.log(`currentsDepts variables equals: \n ${currentDepts}`);
+                 if (!currentDepts.includes(res.deptName)) {
+                    db.addDepartment(res.deptName);
+                } else {
+                    console.log('That departments already exists. It has NOT been added again.');
+                }
+                goToMainMenu();
+            });
+        });
 };
 
 // Function for handling the add new role menu
