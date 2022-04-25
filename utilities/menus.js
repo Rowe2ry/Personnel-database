@@ -1,9 +1,15 @@
+let deptList;
+let empList;
+let roleList;
+let managerList =[];
+
+
 const mainMenu = [
     {
         type: 'list',
         name: 'home',
         message:'Welcome to the personnel management tool. What would you like to accomplish today?',
-        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee' , 'update an employee role']
+        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee' , 'update an employee role', 'exit application']
     }
 ];
 
@@ -47,7 +53,7 @@ const addEmp = [
     },
     {
         type: 'list',
-        name: 'empName',
+        name: 'empJob',
         message: 'What is the employee\'s job?',
         choices: roleList
     },
@@ -55,7 +61,7 @@ const addEmp = [
         type: 'list',
         name: 'empManage',
         message: 'Who does this employee report to?',
-        choices: [...empList, 'nobody: this employee is their department\'s manager'] 
+        choices: [...managerList, 'nobody: this employee is their own department\'s manager'] 
     }
 ];
 

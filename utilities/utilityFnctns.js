@@ -1,9 +1,7 @@
 const inquirer = require('inquirer');
-const { mainMenu, addDept } = require('./menus');
-const prompts = require('./utilities/menus');
-const db = require('./utilities/mysql');
+const prompts = require('./menus');
+const db = require('./mysql');
 const tables = require('console.table');
-const { addRole, viewAllRoles } = require('./mysql');
 
 // TODO: function to go to the main menu
 // switch case statement for main menu response
@@ -15,14 +13,17 @@ const goToMainMenu = () => {
         // switch statement launches conditional logic execution for the menu interaction
         switch (res.home) {
             case 'view all departments': // log the table object array returned from mysql
-                console.table(db.viewAllDepts());
+                console.table(db.viewAllDepts()
+                .then(([rows]) => {
+                    return rows;
+                }));
                 goToMainMenu();
                 break;
             case 'view all roles': // log the table object array returned from mysql
-                console.table(db.viewAllRoles());
+                console.log(db.viewAllRoles());
                 goToMainMenu();
             break;
-            case 'view all employees': // log the formated table object array returned from mysql
+            case 'view all employees': // log the formatted table object array returned from mysql
                 console.table(db.viewAllEmployees());
                 goToMainMenu();
                 break;
@@ -51,7 +52,7 @@ const goToMainMenu = () => {
 const addDeptMenu = () => {
     inquirer.prompt([...prompts.addDept])
     .then((res) => {
-        const currentDepts = viewAllDepts().map(department => department.dept_name);
+        const currentDepts = db.viewAllDepts().map(department => department.dept_name);
         if (!currentDepts.includes(res.deptName)) {
             db.addDepartment(res.deptName);
         } else {
@@ -61,10 +62,10 @@ const addDeptMenu = () => {
     });
 };
 
-// TODO: Function for handling the add new role menu
+// Function for handling the add new role menu
 const addRoleMenu = () => {
-   // TODO: write function below for the menu that gets 3 values and passes in the 'db.addRole(res.roleName, res.roleSalary, res.roleToDepot)' function
-   const deptList = viewAllDepts().map(department => department.dept_name);
+   // function for the menu that gets 3 values and passes in the 'db.addRole(res.roleName, res.roleSalary, res.roleToDepot)'
+   const deptList = db.viewAllDepts().map(department => department.dept_name);
     inquirer.prompt([...prompts.addRole])
     .then((res) => {
         const currentRoles = db.viewAllRoles().map(roles => roles.job_title);
@@ -78,6 +79,21 @@ const addRoleMenu = () => {
 };
 
 // TODO: Function for handling the add new employee menu
+const addNewEmpMenu = () => {
+    goToMainMenu();
+}
 
 // TODO: Function for Updating a role
 
+const updateEmpMenu = () => {
+    managerList = returnManagerList();
+    goToMainMenu();
+};
+
+module.exports = {
+    goToMainMenu,
+    addDeptMenu,
+    addRoleMenu,
+    addNewEmpMenu,
+    updateEmpMenu  
+};

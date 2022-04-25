@@ -39,7 +39,7 @@ class SQL {
 
     // add a role
     addRole(job_title, salary, department) {
-        return this.mysql.promise().query(`INSER INTO role (title, salary, department_id) VALUES ('${job_title}', ${salary}, ${department});`);
+        return this.mysql.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ('${job_title}', ${salary}, ${department});`);
     };
 
     // add employee

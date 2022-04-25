@@ -15,7 +15,7 @@ db = mysql.createConnection(
       user: 'root',
       // MySQL password
       password: 'Root1234!',
-      database: 'classlist_db'
+      database: 'human_resources'
     },
   );
 
